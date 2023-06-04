@@ -31,7 +31,7 @@ export class ImageHandler {
    * @returns A Sharp image object
    */
   // eslint-disable-next-line @typescript-eslint/ban-types
-  private async instantiateSharpImage(originalImage: Buffer, edits: ImageEdits, options: Object): Promise<sharp.Sharp> {
+  protected async instantiateSharpImage(originalImage: Buffer, edits: ImageEdits, options: Object): Promise<sharp.Sharp> {
     let image: sharp.Sharp = null;
 
     if (edits.rotate !== undefined && edits.rotate === null) {
@@ -52,7 +52,7 @@ export class ImageHandler {
    * @param imageRequestInfo the image request
    * @returns A Sharp image object
    */
-  private modifyImageOutput(modifiedImage: sharp.Sharp, imageRequestInfo: ImageRequestInfo): sharp.Sharp {
+  protected modifyImageOutput(modifiedImage: sharp.Sharp, imageRequestInfo: ImageRequestInfo): sharp.Sharp {
     const modifiedOutputImage = modifiedImage;
 
     // modify if specified
