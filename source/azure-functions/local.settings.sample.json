@@ -1,0 +1,13 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "AzureWebJobsFeatureFlags": "EnableWorkerIndexing",
+    "SOURCE_BUCKETS": "att-atlas-staging-files,att-atlas-files",
+    "AUTO_WEBP": "No",
+    "AWS_ACCESS_KEY_ID": "changeme",
+    "AWS_SECRET_ACCESS_KEY": "changeme",
+    "AWS_REGION": "us-east-1"
+  }
+}

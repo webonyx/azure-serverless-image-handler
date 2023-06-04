@@ -1,0 +1,25 @@
+{
+  "name": "azureimagehandler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/azure-functions/functions/*.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "clean": "rimraf dist",
+    "prestart": "npm run clean && npm run build",
+    "start": "func start",
+    "test": "echo \"No tests yet...\""
+  },
+  "dependencies": {
+    "@azure/functions": "^4.0.0-alpha.7",
+    "aws-sdk": "^2.1356.0",
+    "sharp": "^0.32.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.x",
+    "@types/sharp": "^0.32.0",
+    "rimraf": "^5.0.0",
+    "typescript": "^4.8.4"
+  }
+}
