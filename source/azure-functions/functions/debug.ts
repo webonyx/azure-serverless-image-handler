@@ -1,26 +1,21 @@
 import { app } from "@azure/functions";
 
-// app.http("imagehandler", {
-//   methods: ["GET"],
-//   route: "{code}/{filename}.{extension}",
-//   handler: imageHandler,
-// });
-
 app.http("debug", {
   methods: ["GET"],
   route: "debug/env",
   handler: () => {
-    const {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      AWS_ACCESS_KEY_ID,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      AWS_SECRET_ACCESS_KEY,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      APPSETTING_AWS_ACCESS_KEY_ID,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      APPSETTING_AWS_SECRET_ACCESS_KEY,
-      ...env
-    } = process.env;
+    const env = process.env;
+
+    for (const name in env) {
+      if (
+        name.includes("AWS_ACCESS") ||
+        name.includes("AWS_SECRET") ||
+        name.endsWith("CONNECTION_STRING") ||
+        env[name].includes("Key=")
+      ) {
+        env[name] = "[REDACTED]";
+      }
+    }
 
     return { body: JSON.stringify(env) };
   },
