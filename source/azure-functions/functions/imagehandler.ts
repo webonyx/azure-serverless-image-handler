@@ -78,6 +78,6 @@ app.http("imagehandler", {
 
 app.http("envdebug", {
   methods: ["GET"],
-  route: "/debug/env",
+  route: "debug/env",
   handler: () => ({ body: JSON.stringify(process.env) }),
 });
