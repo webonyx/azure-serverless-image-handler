@@ -1,3 +1,4 @@
+// eslint-disable @typescript-eslint/no-unused-vars
 import { app } from "@azure/functions";
 
 // app.http("imagehandler", {
@@ -9,5 +10,19 @@ import { app } from "@azure/functions";
 app.http("debug", {
   methods: ["GET"],
   route: "debug/env",
-  handler: () => ({ body: JSON.stringify(process.env) }),
+  handler: () => {
+    const {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      AWS_ACCESS_KEY_ID,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      AWS_SECRET_ACCESS_KEY,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      APPSETTING_AWS_ACCESS_KEY_ID,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      APPSETTING_AWS_SECRET_ACCESS_KEY,
+      ...env
+    } = process.env;
+
+    return { body: JSON.stringify(env) };
+  },
 });
