@@ -6,5 +6,6 @@ __azurite_db*__.json
 __blobstorage__
 __queuestorage__
 local.settings.json
+local.settings.sample.json
 test
 tsconfig.json
