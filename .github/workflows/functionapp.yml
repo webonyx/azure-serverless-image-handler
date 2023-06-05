@@ -1,0 +1,37 @@
+name: Deploy Azure Function App
+
+on:
+  [push]
+
+env:
+  AZURE_FUNCTIONAPP_NAME: 'atlasimagehandlerdev'
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: 'source/azure-functions'
+  NODE_VERSION: '18.x'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v3
+
+      - name: Setup Node ${{ env.NODE_VERSION }} Environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: 'Npm install'
+        shell: bash
+        run: |
+          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+          npm install
+          npm run build --if-present
+          popd
+
+      - name: 'Deploy Azure Functions'
+        uses: Azure/functions-action@v1
+        id: fa
+        with:
+          app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+          package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_DEV_PUBLISH_PROFILE }}
