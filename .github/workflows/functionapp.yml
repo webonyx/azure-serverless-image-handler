@@ -3,6 +3,7 @@ name: Deploy Azure Function App
 on:
   [push]
 
+# az functionapp deployment list-publishing-profiles -n func-name -g group-name --xml
 env:
   AZURE_FUNCTIONAPP_NAME: 'atlasimagehandlerdev'
   AZURE_FUNCTIONAPP_PACKAGE_PATH: 'source/azure-functions'

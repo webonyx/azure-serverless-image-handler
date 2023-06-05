@@ -1,4 +1,7 @@
 import { Headers } from "../../image-handler/lib";
+import type { BlobDownloadResponseParsed } from "@azure/storage-blob";
+import {PromiseResult} from "aws-sdk/lib/request";
+import S3 from "aws-sdk/clients/s3";
 
 /**
  * @returns string
@@ -40,4 +43,39 @@ export function getResponseHeaders(isError: boolean = false, isAlb: boolean = fa
   }
 
   return headers;
+}
+
+/**
+ *
+ */
+export async function streamToBuffer(stream) {
+  return new Promise((resolve, reject) => {
+    const data = [];
+
+    stream.on("data", (chunk) => {
+      data.push(chunk);
+    });
+
+    stream.on("end", () => {
+      resolve(Buffer.concat(data));
+    });
+
+    stream.on("error", (err) => {
+      reject(err);
+    });
+  });
+}
+
+export async function convertBlockBlobResponse2S3GetObjectOutput(
+  blockBlobResponse: BlobDownloadResponseParsed
+): Promise<PromiseResult<S3.GetObjectOutput, Error>> {
+  const bodyBuffer = await streamToBuffer(blockBlobResponse.readableStreamBody);
+
+  return {
+    ContentType: blockBlobResponse.contentType,
+    ContentLength: blockBlobResponse.contentLength,
+    LastModified: blockBlobResponse.lastModified,
+    CacheControl: blockBlobResponse.cacheControl,
+    Body: bodyBuffer,
+  } as PromiseResult<S3.GetObjectOutput, Error>;
 }
