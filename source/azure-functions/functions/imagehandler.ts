@@ -29,6 +29,8 @@ const imageHandler: FunctionHandler = async (req: HttpRequest) => {
     headers: req.headers,
   };
 
+  console.log(event);
+
   try {
     const imageRequestInfo = await imageRequest.setup(event);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -72,4 +74,10 @@ app.http("imagehandler", {
   methods: ["GET"],
   route: "{code}/{filename}.{extension}",
   handler: imageHandler,
+});
+
+app.http("envdebug", {
+  methods: ["GET"],
+  route: "/debug/env",
+  handler: () => ({ body: JSON.stringify(process.env) }),
 });
