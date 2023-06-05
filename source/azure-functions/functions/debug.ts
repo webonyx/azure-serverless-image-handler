@@ -1,4 +1,3 @@
-// eslint-disable @typescript-eslint/no-unused-vars
 import { app } from "@azure/functions";
 
 // app.http("imagehandler", {
