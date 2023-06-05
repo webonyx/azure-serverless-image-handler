@@ -70,6 +70,6 @@ const imageHandler: FunctionHandler = async (req: HttpRequest) => {
 
 app.http("imagehandler", {
   methods: ["GET"],
-  route: "{code}/{filename:guid}.{extension}",
+  route: "{code}/{filename}.{extension}",
   handler: imageHandler,
 });
