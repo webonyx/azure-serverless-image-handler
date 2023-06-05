@@ -23,8 +23,11 @@ jobs:
       - name: 'Npm install'
         shell: bash
         run: |
+          pushd ./source/image-handler
+          npm run clean && npm ci
+          popd
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-          npm install
+          npm ci
           npm run build --if-present
           popd
 
