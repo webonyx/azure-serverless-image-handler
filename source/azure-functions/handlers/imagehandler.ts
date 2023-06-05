@@ -1,4 +1,4 @@
-import { app, HttpRequest, FunctionHandler } from "@azure/functions";
+import { HttpRequest, FunctionHandler } from "@azure/functions";
 
 import S3 from "aws-sdk/clients/s3";
 import Rekognition from "aws-sdk/clients/rekognition";
@@ -17,7 +17,7 @@ const s3Proxy = new StorageBlobS3Proxy({
   s3: s3Client,
 });
 
-const imageHandler: FunctionHandler = async (req: HttpRequest) => {
+export const imageHandler: FunctionHandler = async (req: HttpRequest) => {
   const imageRequest = new ImageRequest(s3Proxy as unknown as S3, secretProvider as any);
   const imageHandler = new CustomImageHandler(s3Client, rekognitionClient);
 
@@ -69,15 +69,3 @@ const imageHandler: FunctionHandler = async (req: HttpRequest) => {
     };
   }
 };
-
-app.http("imagehandler", {
-  methods: ["GET"],
-  route: "{code}/{filename}.{extension}",
-  handler: imageHandler,
-});
-
-app.http("envdebug", {
-  methods: ["GET"],
-  route: "debug/env",
-  handler: () => ({ body: JSON.stringify(process.env) }),
-});
