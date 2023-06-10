@@ -1,0 +1,13 @@
+{
+  "name": "imagehandler",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      "VARIANT": "18-bullseye"
+    }
+  },
+  "postCreateCommand": ".devcontainer/setup.sh",
+  "forwardPorts": [
+    7071
+  ]
+}
